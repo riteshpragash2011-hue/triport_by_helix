@@ -1,0 +1,809 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply text-neutral-900 bg-white antialiased;
+    font-family: 'Inter', system-ui, sans-serif;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-semibold tracking-tight;
+  }
+
+  *:focus-visible {
+    @apply outline-2 outline-offset-2 outline-gold;
+  }
+}
+
+@layer components {
+  .btn-gold {
+    @apply inline-flex items-center justify-center px-6 py-3 text-sm font-semibold text-white bg-gold hover:bg-gold-dark transition-colors duration-200 rounded-sm tracking-wide;
+  }
+
+  .btn-outline {
+    @apply inline-flex items-center justify-center px-6 py-3 text-sm font-semibold text-neutral-900 border border-neutral-300 hover:border-gold hover:text-gold transition-colors duration-200 rounded-sm tracking-wide;
+  }
+
+  .section-label {
+    @apply text-xs font-semibold uppercase tracking-[0.2em] text-gold;
+  }
+
+  .section-heading {
+    @apply text-3xl sm:text-4xl font-bold text-neutral-900 tracking-tight;
+  }
+
+  .form-label {
+    @apply block text-sm font-medium text-neutral-700 mb-1.5;
+  }
+
+  .form-input {
+    @apply w-full px-4 py-2.5 text-sm bg-white border border-neutral-200 rounded-sm text-neutral-900 placeholder-neutral-400 focus:outline-none focus:ring-2 focus:ring-gold/30 focus:border-gold transition-colors duration-200;
+  }
+
+  .form-textarea {
+    @apply w-full px-4 py-2.5 text-sm bg-white border border-neutral-200 rounded-sm text-neutral-900 placeholder-neutral-400 focus:outline-none focus:ring-2 focus:ring-gold/30 focus:border-gold transition-colors duration-200 resize-none;
+  }
+
+  .form-select {
+    @apply w-full px-4 py-2.5 text-sm bg-white border border-neutral-200 rounded-sm text-neutral-900 focus:outline-none focus:ring-2 focus:ring-gold/30 focus:border-gold transition-colors duration-200 cursor-pointer;
+  }
+}
+
+@layer utilities {
+  .gold-border-top {
+    border-top: 2px solid #C9A84C;
+  }
+
+  .gold-underline {
+    text-decoration: underline;
+    text-decoration-color: #C9A84C;
+    text-underline-offset: 4px;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════
+   SPLASH SCREEN
+═══════════════════════════════════════════════════════════ */
+
+.splash-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: #000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  pointer-events: all;
+}
+
+.splash-exit {
+  animation: splashExit 0.9s cubic-bezier(0.76, 0, 0.24, 1) forwards;
+  pointer-events: none;
+}
+
+@keyframes splashExit {
+  0%   { clip-path: inset(0 0 0% 0); }
+  100% { clip-path: inset(0 0 100% 0); }
+}
+
+.splash-grid {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(212,175,55,0.07) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(212,175,55,0.07) 1px, transparent 1px);
+  background-size: 80px 80px;
+  opacity: 0;
+  animation: splashFadeIn 1s ease forwards;
+  animation-delay: 0.2s;
+}
+
+.splash-beam-wrap {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+}
+
+.splash-beam {
+  position: absolute;
+  top: -50%;
+  left: -250px;
+  width: 200px;
+  height: 200%;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(212,175,55,0.04) 15%,
+    rgba(212,175,55,0.22) 35%,
+    rgba(255,225,80,0.65) 50%,
+    rgba(212,175,55,0.22) 65%,
+    rgba(212,175,55,0.04) 85%,
+    transparent 100%
+  );
+  transform: skewX(-18deg);
+  filter: blur(3px);
+  opacity: 0;
+  animation: splashBeamSweep 1.6s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+  animation-delay: 0.6s;
+}
+
+@keyframes splashBeamSweep {
+  0%   { left: -250px; opacity: 0; }
+  4%   { opacity: 1; }
+  96%  { opacity: 1; }
+  100% { left: calc(100vw + 250px); opacity: 0; }
+}
+
+.splash-scanline {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent 0%, rgba(212,175,55,0.7) 50%, transparent 100%);
+  opacity: 0;
+  animation: splashScan 2s ease-in-out forwards;
+  animation-delay: 1.8s;
+}
+
+@keyframes splashScan {
+  0%   { top: -1px; opacity: 0; }
+  3%   { opacity: 1; }
+  97%  { opacity: 0.8; }
+  100% { top: 100%; opacity: 0; }
+}
+
+/* ─── Logo ─────────────────────────────────────────────────── */
+
+.splash-content {
+  position: relative;
+  z-index: 10;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+
+/* Outer wrapper — relative container, no stacking-context tricks */
+.splash-logo-wrap {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 14px 24px;
+}
+
+/* Pulsing radial glow that sits behind the logo */
+.splash-logo-glow {
+  position: absolute;
+  inset: -20px;
+  background: radial-gradient(ellipse 85% 65% at 50% 50%, rgba(212,175,55,0.28) 0%, transparent 70%);
+  border-radius: 50%;
+  opacity: 0;
+  pointer-events: none;
+  z-index: 1;
+  animation: splashGlowPulse 1.8s ease-in-out infinite;
+  animation-delay: 2.3s;
+}
+
+@keyframes splashGlowPulse {
+  0%, 100% { opacity: 0.25; transform: scale(0.9); }
+  50%       { opacity: 0.85; transform: scale(1.1); }
+}
+
+/* Logo element:
+   - clip-path reveals top→bottom (3D-print layer effect)
+   - slow zoom-in spans the whole animation (camera push-in feel)
+   No blend-mode trickery needed — the white bg is removed in JS via canvas. */
+.splash-logo {
+  position: relative;
+  z-index: 2;
+  clip-path: inset(0 0 100% 0);
+  transform: scale(0.42);
+  animation:
+    splashLogoPrint 0.95s cubic-bezier(0.4, 0, 0.2, 1) forwards,
+    splashLogoZoom  4.1s  cubic-bezier(0.25, 0.1, 0.25, 1) forwards;
+  animation-delay: 1.4s, 0.4s;
+}
+
+/* Reveals logo top → bottom (like a print head depositing layers) */
+@keyframes splashLogoPrint {
+  0%   { clip-path: inset(0 0 100% 0); }
+  100% { clip-path: inset(0 0 0%   0); }
+}
+
+/* Slow camera zoom — starts at 42% and eases to 100% over the whole animation */
+@keyframes splashLogoZoom {
+  0%   { transform: scale(0.42); }
+  100% { transform: scale(1.0);  }
+}
+
+/* Image: original logo colours preserved (white bg removed via canvas).
+   A gold drop-shadow glow fades in once the logo is fully printed. */
+.splash-logo-img {
+  display: block;
+  height: 80px;
+  width: auto;
+  animation: splashLogoGlow 1.8s ease forwards;
+  animation-delay: 2.4s;
+}
+
+@keyframes splashLogoGlow {
+  0%   { filter: drop-shadow(0 0 0px  rgba(212,175,55,0)); }
+  40%  { filter: drop-shadow(0 0 28px rgba(212,175,55,0.9)); }
+  100% { filter: drop-shadow(0 0 14px rgba(212,175,55,0.55)); }
+}
+
+/* 3D-print nozzle line — glowing bar that tracks the clip-path edge downward */
+.splash-print-line {
+  position: absolute;
+  left: -18px;
+  right: -18px;
+  height: 2px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(212,175,55,0.4)  12%,
+    rgba(255,245,190,1)   44%,
+    rgba(255,255,255,0.95) 50%,
+    rgba(255,245,190,1)   56%,
+    rgba(212,175,55,0.4)  88%,
+    transparent 100%
+  );
+  box-shadow:
+    0 0 4px 1px rgba(255,245,190,0.8),
+    0 0 12px 3px rgba(212,175,55,0.6),
+    0 0 28px 6px rgba(212,175,55,0.25);
+  z-index: 6;
+  top: 0;
+  opacity: 0;
+  pointer-events: none;
+  animation: splashPrintLine 0.95s cubic-bezier(0.4, 0, 0.6, 1) forwards;
+  animation-delay: 1.4s;
+}
+
+@keyframes splashPrintLine {
+  0%   { top: 0%;   opacity: 0; }
+  6%   { opacity: 1; }
+  86%  { opacity: 1; }
+  100% { top: 100%; opacity: 0; }
+}
+
+/* Metallic shine — single bright streak that sweeps left→right after reveal */
+.splash-shine {
+  position: absolute;
+  top: -40%;
+  left: -110%;
+  width: 55%;
+  height: 180%;
+  background: linear-gradient(
+    104deg,
+    transparent 18%,
+    rgba(255,255,255,0.04) 30%,
+    rgba(255,245,160,0.20) 40%,
+    rgba(255,255,255,0.58) 50%,
+    rgba(255,245,160,0.20) 60%,
+    rgba(255,255,255,0.04) 70%,
+    transparent 82%
+  );
+  transform: skewX(-11deg);
+  pointer-events: none;
+  z-index: 7;
+  opacity: 0;
+  animation: splashShine 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+  animation-delay: 2.55s;
+}
+
+@keyframes splashShine {
+  0%   { left: -110%; opacity: 0; }
+  7%   { opacity: 1; }
+  93%  { opacity: 1; }
+  100% { left: 150%;  opacity: 0; }
+}
+
+/* ─── Text ─────────────────────────────────────────────────── */
+
+.splash-divider {
+  width: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(212,175,55,0.6), transparent);
+  animation: splashDivider 0.8s ease forwards;
+  animation-delay: 2.65s;
+}
+
+@keyframes splashDivider {
+  to { width: 200px; }
+}
+
+.splash-tagline {
+  color: rgba(212,175,55,0.75);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.55em;
+  text-transform: uppercase;
+  font-family: 'Inter', sans-serif;
+  opacity: 0;
+  animation: splashTagline 0.7s ease forwards;
+  animation-delay: 2.75s;
+  padding-right: 0.55em;
+}
+
+@keyframes splashTagline {
+  0%   { opacity: 0; letter-spacing: 0.9em; }
+  100% { opacity: 1; letter-spacing: 0.55em; }
+}
+
+.splash-sub {
+  color: rgba(255,255,255,0.2);
+  font-size: 9px;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  opacity: 0;
+  animation: splashFadeIn 0.5s ease forwards;
+  animation-delay: 3.35s;
+}
+
+/* ─── Frame corners ────────────────────────────────────────── */
+
+.splash-corners span {
+  position: absolute;
+  width: 28px;
+  height: 28px;
+  opacity: 0;
+}
+.splash-corners span:nth-child(1) { top: 28px; left: 28px; border-top: 1px solid rgba(212,175,55,0.45); border-left: 1px solid rgba(212,175,55,0.45); animation: splashFadeIn 0.4s ease forwards; animation-delay: 0.3s; }
+.splash-corners span:nth-child(2) { top: 28px; right: 28px; border-top: 1px solid rgba(212,175,55,0.45); border-right: 1px solid rgba(212,175,55,0.45); animation: splashFadeIn 0.4s ease forwards; animation-delay: 0.4s; }
+.splash-corners span:nth-child(3) { bottom: 28px; left: 28px; border-bottom: 1px solid rgba(212,175,55,0.45); border-left: 1px solid rgba(212,175,55,0.45); animation: splashFadeIn 0.4s ease forwards; animation-delay: 0.5s; }
+.splash-corners span:nth-child(4) { bottom: 28px; right: 28px; border-bottom: 1px solid rgba(212,175,55,0.45); border-right: 1px solid rgba(212,175,55,0.45); animation: splashFadeIn 0.4s ease forwards; animation-delay: 0.6s; }
+
+/* ─── Progress bar ─────────────────────────────────────────── */
+
+.splash-progress-bar {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 2px;
+  width: 0;
+  background: linear-gradient(90deg, rgba(212,175,55,0.2), #C9A84C, rgba(212,175,55,0.2));
+  animation: splashProgress 4.1s cubic-bezier(0.05, 0.5, 0.85, 1) forwards;
+  animation-delay: 0.4s;
+}
+
+@keyframes splashProgress {
+  to { width: 100%; }
+}
+
+@keyframes splashFadeIn {
+  to { opacity: 1; }
+}
+
+
+/* ═══════════════════════════════════════════════════════════
+   BIOMETRIC / FORGOT PASSWORD ANIMATION
+═══════════════════════════════════════════════════════════ */
+
+.bio-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: #000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.bio-grid {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(212,175,55,0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(212,175,55,0.05) 1px, transparent 1px);
+  background-size: 60px 60px;
+  animation: splashFadeIn 0.8s ease forwards;
+}
+
+.bio-corners span {
+  position: absolute;
+  width: 32px;
+  height: 32px;
+  opacity: 0;
+}
+.bio-corners span:nth-child(1) { top: 24px; left: 24px; border-top: 1px solid rgba(212,175,55,0.5); border-left: 1px solid rgba(212,175,55,0.5); animation: splashFadeIn 0.4s ease 0.1s forwards; }
+.bio-corners span:nth-child(2) { top: 24px; right: 24px; border-top: 1px solid rgba(212,175,55,0.5); border-right: 1px solid rgba(212,175,55,0.5); animation: splashFadeIn 0.4s ease 0.2s forwards; }
+.bio-corners span:nth-child(3) { bottom: 24px; left: 24px; border-bottom: 1px solid rgba(212,175,55,0.5); border-left: 1px solid rgba(212,175,55,0.5); animation: splashFadeIn 0.4s ease 0.3s forwards; }
+.bio-corners span:nth-child(4) { bottom: 24px; right: 24px; border-bottom: 1px solid rgba(212,175,55,0.5); border-right: 1px solid rgba(212,175,55,0.5); animation: splashFadeIn 0.4s ease 0.4s forwards; }
+
+.bio-scanline {
+  position: absolute;
+  left: 0; right: 0; top: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent 0%, rgba(212,175,55,0.8) 50%, transparent 100%);
+  animation: bioScan 1.4s ease-in-out infinite;
+}
+@keyframes bioScan {
+  0%   { top: 0%; opacity: 0; }
+  5%   { opacity: 1; }
+  95%  { opacity: 0.7; }
+  100% { top: 100%; opacity: 0; }
+}
+
+.bio-center {
+  position: relative;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+  width: 100%;
+  max-width: 340px;
+  padding: 0 24px;
+}
+
+/* ── Rings ── */
+.bio-rings {
+  position: relative;
+  width: 140px;
+  height: 140px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: adminRingIn 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) 0.2s both;
+}
+
+.bio-ring-outer {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  border: 1px solid rgba(212,175,55,0.3);
+  animation: bioRingPulse 2s ease-in-out infinite;
+  transition: border-color 0.5s;
+}
+.bio-ring-mid {
+  position: absolute;
+  inset: 14px;
+  border-radius: 50%;
+  border: 1px solid rgba(212,175,55,0.55);
+  transition: border-color 0.5s;
+}
+.bio-ring-inner {
+  position: absolute;
+  inset: 28px;
+  border-radius: 50%;
+  background: rgba(212,175,55,0.05);
+  border: 1px solid rgba(212,175,55,0.35);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.bio-ring-denied { border-color: rgba(239,68,68,0.6) !important; }
+
+@keyframes bioRingPulse {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50%       { transform: scale(1.14); opacity: 0.3; }
+}
+
+.bio-fp-icon {
+  width: 44px;
+  height: 44px;
+  color: rgba(212,175,55,0.7);
+}
+
+.bio-cross {
+  animation: splashFadeIn 0.3s ease forwards;
+}
+
+/* ── Status text ── */
+.bio-status-wrap {
+  min-height: 20px;
+  text-align: center;
+}
+
+.bio-label {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  font-family: 'Inter', sans-serif;
+  color: rgba(212,175,55,0.8);
+}
+.bio-glow  { color: #C9A84C; text-shadow: 0 0 16px rgba(212,175,55,0.7); }
+.bio-red   { color: #ef4444; text-shadow: 0 0 14px rgba(239,68,68,0.5); }
+
+.bio-blink { animation: bioBlink 0.9s ease-in-out infinite; }
+@keyframes bioBlink {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.35; }
+}
+
+.bio-fade-in { animation: splashFadeIn 0.4s ease forwards; }
+
+/* ── Progress bar ── */
+.bio-bar-track {
+  width: 220px;
+  height: 2px;
+  background: rgba(255,255,255,0.06);
+  border-radius: 1px;
+  overflow: hidden;
+}
+.bio-bar-fill {
+  height: 100%;
+  border-radius: 1px;
+  transition: width 0.9s cubic-bezier(0.4,0,0.2,1), background 0.5s;
+}
+
+/* ── Contact card ── */
+.bio-contact {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  width: 100%;
+}
+.bio-contact-inner {
+  width: 100%;
+  border: 1px solid rgba(212,175,55,0.2);
+  background: rgba(212,175,55,0.04);
+  padding: 20px 24px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+.bio-contact-label {
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.3em;
+  color: rgba(212,175,55,0.5);
+  text-transform: uppercase;
+  margin-bottom: 4px;
+}
+.bio-contact-body {
+  font-size: 12px;
+  color: rgba(255,255,255,0.5);
+  letter-spacing: 0.04em;
+}
+.bio-contact-divider {
+  width: 40px;
+  height: 1px;
+  background: rgba(212,175,55,0.3);
+  margin: 6px 0;
+}
+.bio-contact-name {
+  font-size: 16px;
+  font-weight: 700;
+  color: #ffffff;
+  letter-spacing: 0.06em;
+}
+.bio-contact-email {
+  font-size: 12px;
+  color: #C9A84C;
+  letter-spacing: 0.05em;
+  text-decoration: none;
+  font-family: monospace;
+}
+.bio-contact-email:hover { text-decoration: underline; }
+
+.bio-close-btn {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.35);
+  border: 1px solid rgba(255,255,255,0.1);
+  padding: 8px 28px;
+  background: transparent;
+  cursor: pointer;
+  transition: color 0.2s, border-color 0.2s;
+}
+.bio-close-btn:hover {
+  color: rgba(212,175,55,0.8);
+  border-color: rgba(212,175,55,0.3);
+}
+
+
+/* ═══════════════════════════════════════════════════════════
+   ADMIN LOGIN ANIMATION
+═══════════════════════════════════════════════════════════ */
+
+.admin-anim-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: #000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 28px;
+  overflow: hidden;
+}
+
+.admin-anim-exit {
+  animation: adminExit 0.7s cubic-bezier(0.55, 0, 1, 0.45) forwards;
+}
+
+@keyframes adminExit {
+  0%   { opacity: 1; transform: scale(1); }
+  40%  { opacity: 1; transform: scale(1.03); }
+  100% { opacity: 0; transform: scale(1.08); }
+}
+
+.admin-anim-grid {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(212,175,55,0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(212,175,55,0.05) 1px, transparent 1px);
+  background-size: 60px 60px;
+  opacity: 0;
+  animation: splashFadeIn 1s ease forwards;
+}
+
+.admin-anim-corners span {
+  position: absolute;
+  width: 32px;
+  height: 32px;
+  opacity: 0;
+}
+.admin-anim-corners span:nth-child(1) { top: 24px; left: 24px; border-top: 1px solid rgba(212,175,55,0.5); border-left: 1px solid rgba(212,175,55,0.5); animation: splashFadeIn 0.5s ease forwards; animation-delay: 0.1s; }
+.admin-anim-corners span:nth-child(2) { top: 24px; right: 24px; border-top: 1px solid rgba(212,175,55,0.5); border-right: 1px solid rgba(212,175,55,0.5); animation: splashFadeIn 0.5s ease forwards; animation-delay: 0.2s; }
+.admin-anim-corners span:nth-child(3) { bottom: 24px; left: 24px; border-bottom: 1px solid rgba(212,175,55,0.5); border-left: 1px solid rgba(212,175,55,0.5); animation: splashFadeIn 0.5s ease forwards; animation-delay: 0.3s; }
+.admin-anim-corners span:nth-child(4) { bottom: 24px; right: 24px; border-bottom: 1px solid rgba(212,175,55,0.5); border-right: 1px solid rgba(212,175,55,0.5); animation: splashFadeIn 0.5s ease forwards; animation-delay: 0.4s; }
+
+.admin-anim-ring-wrap {
+  position: relative;
+  width: 130px;
+  height: 130px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transform: scale(0.2);
+  animation: adminRingIn 0.9s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+  animation-delay: 0.3s;
+}
+
+@keyframes adminRingIn {
+  to { opacity: 1; transform: scale(1); }
+}
+
+.admin-anim-ring-outer {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  border: 1px solid rgba(212,175,55,0.25);
+  animation: adminRingPulse 2.5s ease-in-out infinite;
+  animation-delay: 1.2s;
+}
+
+@keyframes adminRingPulse {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50%       { transform: scale(1.18); opacity: 0.3; }
+}
+
+.admin-anim-ring-mid {
+  position: absolute;
+  inset: 10px;
+  border-radius: 50%;
+  border: 1px solid rgba(212,175,55,0.5);
+}
+
+.admin-anim-ring-inner {
+  position: absolute;
+  inset: 22px;
+  border-radius: 50%;
+  background: rgba(212,175,55,0.06);
+  border: 1px solid rgba(212,175,55,0.3);
+}
+
+.admin-anim-logo {
+  opacity: 0;
+  position: relative;
+  z-index: 1;
+  animation: adminLogoIn 0.6s ease forwards;
+  animation-delay: 0.9s;
+  filter: drop-shadow(0 0 18px rgba(212,175,55,0.9));
+}
+
+@keyframes adminLogoIn {
+  from { opacity: 0; transform: scale(0.7); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+.admin-anim-logo-img {
+  display: block;
+  height: auto;
+  width: 56px;
+}
+
+.admin-anim-verified {
+  color: #C9A84C;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.45em;
+  text-transform: uppercase;
+  padding-right: 0.45em;
+  opacity: 0;
+  animation: adminTextIn 0.6s ease forwards;
+  animation-delay: 1.6s;
+}
+
+.admin-anim-name {
+  color: rgba(255,255,255,0.55);
+  font-size: 12px;
+  font-weight: 400;
+  letter-spacing: 0.12em;
+  opacity: 0;
+  animation: adminTextIn 0.5s ease forwards;
+  animation-delay: 2.1s;
+}
+
+@keyframes adminTextIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.admin-anim-bar-wrap {
+  width: 180px;
+  height: 1px;
+  background: rgba(212,175,55,0.15);
+  overflow: hidden;
+  opacity: 0;
+  animation: splashFadeIn 0.3s ease forwards;
+  animation-delay: 2.6s;
+}
+
+.admin-anim-bar-fill {
+  height: 100%;
+  width: 0;
+  background: linear-gradient(90deg, rgba(212,175,55,0.4), #C9A84C, rgba(212,175,55,0.4));
+  animation: adminBarFill 1.6s cubic-bezier(0.1, 0.4, 0.95, 1) forwards;
+  animation-delay: 2.9s;
+}
+
+@keyframes adminBarFill {
+  to { width: 100%; }
+}
+
+.admin-anim-status {
+  color: rgba(212,175,55,0.4);
+  font-size: 9px;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  opacity: 0;
+  animation: splashFadeIn 0.4s ease forwards;
+  animation-delay: 3.2s;
+}
+
+/* Fade-in animation for toast */
+@keyframes slide-in-from-bottom {
+  from {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.animate-in {
+  animation-fill-mode: both;
+}
+
+.slide-in-from-bottom-4 {
+  animation: slide-in-from-bottom 0.3s ease-out;
+}

@@ -1,0 +1,74 @@
+[
+  {
+    "id": "0002",
+    "name": "Ritesh Pragash",
+    "rank": "team_lead",
+    "password": "67419812",
+    "passwordHash": "fd31d7a53d9413a2dd30c835e46469c3ad3bea3970520c85b0f300dbbdf096c9",
+    "permissions": {
+      "canLogin": true,
+      "canViewRequests": true,
+      "canAddProducts": true,
+      "canDeleteProducts": true,
+      "canAddMembers": true,
+      "canDeleteMembers": true,
+      "canManageMembers": true,
+      "canManageProducts": true
+    },
+    "createdBy": null
+  },
+  {
+    "id": "0000",
+    "name": "Arjun Ray Majumder",
+    "rank": "ser_member",
+    "password": "34207620",
+    "permissions": {
+      "canLogin": true,
+      "canViewRequests": true,
+      "canAddProducts": true,
+      "canDeleteProducts": true,
+      "canAddMembers": true,
+      "canDeleteMembers": true,
+      "canManageMembers": true,
+      "canManageProducts": true
+    },
+    "createdBy": "0002",
+    "passwordHash": "fcd188ad01eac1a1a76fa7eba85f725915475263b999b477b625e3418139a79f"
+  },
+  {
+    "id": "0001",
+    "name": "Mhika Sengupta",
+    "rank": "ser_member",
+    "password": "07242020",
+    "permissions": {
+      "canLogin": true,
+      "canViewRequests": true,
+      "canAddProducts": true,
+      "canDeleteProducts": true,
+      "canAddMembers": true,
+      "canDeleteMembers": true,
+      "canManageMembers": true,
+      "canManageProducts": true
+    },
+    "createdBy": "0002",
+    "passwordHash": "f3e7869a9f99d8ac872e760b2bc00b5d3a068839f10680872cbb30433c2b6f20"
+  },
+  {
+    "id": "0015",
+    "name": "Jason Zhang",
+    "rank": "base_member",
+    "password": "13243509",
+    "permissions": {
+      "canLogin": true,
+      "canViewRequests": false,
+      "canAddProducts": true,
+      "canDeleteProducts": true,
+      "canAddMembers": false,
+      "canDeleteMembers": false,
+      "canManageMembers": false,
+      "canManageProducts": true
+    },
+    "createdBy": "0002",
+    "passwordHash": "21287ebcf3ab09f93c6a9ff70292ec33b7b36cd2df9253e2e12c79ad3f504488"
+  }
+]
