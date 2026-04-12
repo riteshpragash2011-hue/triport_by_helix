@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { getAllRequestsAction } from "@/actions/request-management";
-import RequestsClient from "./RequestsClient";
+import RequestsClient from "./RequestsClient"; 
 
 export const dynamic = "force-dynamic";
 export const metadata: Metadata = {
