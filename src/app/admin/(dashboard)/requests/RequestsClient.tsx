@@ -8,7 +8,7 @@ import { updateRequestStatusAction, addStatusUpdateAction, RequestStatus, Status
 interface BuyRequest {
   id: string; type: "buy"; createdAt: string; status: RequestStatus;
   statusUpdates: StatusUpdate[]; customerName: string; email: string;
-  phone?: string; productName: string; quantity: number; notes?: string;
+  phone?: string; productName: string; quantity: number; notes?: string; 
 }
 interface CustomRequest {
   id: string; type: "custom"; createdAt: string; status: RequestStatus;
