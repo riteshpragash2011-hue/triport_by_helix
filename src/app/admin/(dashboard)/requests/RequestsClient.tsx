@@ -3,7 +3,6 @@
 import { useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
 import { updateRequestStatusAction, addStatusUpdateAction, RequestStatus, StatusUpdate } from "@/actions/request-management";
-export default function RequestsClient ({buyRequests, customRequests}) {...}
 
 /* ── Types ─────────────────────────────────────────────────────── */
 interface BuyRequest {
